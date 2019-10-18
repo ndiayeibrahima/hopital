@@ -1,0 +1,101 @@
+<?php 
+include_once 'managerPt.php';
+include_once 'patient.php';
+
+ 
+
+
+
+
+$mananger = new Manager();
+
+$patients = $mananger->readAll();
+
+
+
+
+ ?>
+
+ <!DOCTYPE html>
+<html lang='en'>
+<head>
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <meta charset="UTF_8">
+  <title>liste patients</title>
+</head>
+<body>
+ <center><?php require_once 'menu.php'; ?></center> 
+  <div class="container" style="margin-top:70px;">
+    <div class="panel-primary">
+      <div class="panel-heading">Liste des patientss</div>
+      <div class="panel-body">
+        
+        <form method="POST" action="rechercheEmp.php" class="form-inline">
+          <div class="form-group">
+            <input type="text" name="nom" placeholder="Taper Nom ou Prenom">
+            <input type="submit" name="submit" value="Rechercher" class="btn btn-success">
+            <a href="form_create_patient.php">Nouveau patient <img src="plus.png" style="width:3%"></a>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="panel-primary">
+      
+      <div class="panel-body">
+         
+      
+<table class="table table-striped table-bordered">
+
+          <thead>
+            <tr>
+            <th>Nom</th><th>Prenom</th><th>Email</th><th>Pays</th><th>Telephone</th>
+           
+
+            <th>Modifier</th><th>Supprimer</th>
+            </tr>
+          </thead>
+          <tbody>
+
+
+       
+           
+    <?php foreach($patients as  $patient): ?>
+    
+       
+             
+      
+            <tr>
+             
+               <td><?= $patient->getNom() ?> </td>
+                <td><?= $patient->getPrenom() ?> </td>
+                <td><?= $patient->getEmail() ?> </td>
+                 <td><?= $patient->getPays() ?> </td>
+                  <td><?= $patient->getTel() ?> </td>
+                   
+                  
+               
+       <td><a  href="form_mod_patient.php?id=<?= $patient->getId()  ?>"><img src="mod.png" style="width:20%; text-align: center;"></a></td>
+    <td><a  onclick="return confirm('Voulez vous vraiement supprimer cette ligne')" href="deletePatient.php?id=<?= $patient->getId() ?>"><img src="sup.png" style="width:16%; text-align: center;"></a></td>
+      
+            </tr>
+
+         
+
+        <?php endforeach; ?>
+
+  
+           
+          </tbody>
+</table>
+      
+    </div>
+  </div> 
+
+</body>
+</html>
+
+
+
+
+
